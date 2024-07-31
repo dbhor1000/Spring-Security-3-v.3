@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +39,15 @@ public class SecurityConfig {
                 .oauth2Login(o -> o
                         .userInfoEndpoint(u -> u
                                 .userService(customOAuth2UserService)
+                        )
+                )
+                .exceptionHandling(e -> e
+                        .accessDeniedHandler(new CustomAccessDeniedHandler("/roleInsufficient"))
+                        .defaultAuthenticationEntryPointFor(
+                                new LoginRequiredEntryPoint("/roleInsufficient"),
+                                new OrRequestMatcher(
+                                        new AntPathRequestMatcher("/adminOnly/**")
+                                )
                         )
                 );
 
