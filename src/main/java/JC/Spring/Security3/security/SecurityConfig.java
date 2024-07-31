@@ -1,5 +1,6 @@
 package JC.Spring.Security3.security;
 
+import JC.Spring.Security3.repository.UserRepository;
 import JC.Spring.Security3.user.Role;
 import JC.Spring.Security3.userService.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
@@ -75,6 +77,9 @@ public class SecurityConfig {
 
     @Autowired
     private LogoutHandler customLogoutHandler;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
