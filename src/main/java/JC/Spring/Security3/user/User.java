@@ -13,7 +13,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Integer loginId;
     private String login;
     @Enumerated(EnumType.STRING)
